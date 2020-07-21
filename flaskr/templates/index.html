@@ -5,6 +5,31 @@
 {% endblock %}
 
 {% block content %}
+
 <h1>{{titulo}}</h1>
-{% include 'file.html' %}
+
+{{error}}
+
+
+<form method="POST" enctype="multipart/form-data">
+    
+    <br>
+    <label for="u">From node # </label>
+    <input id="u" type="number" name="u" title="1" value="1">
+    <label for="v">To node # </label>
+    <input id="v" type="number" name="v" value="4">
+    <br>
+    <input type="file" name="file">
+
+    <input type="submit" value="Update graph">  
+
+</form>
+
+
+<p>Now showing: {{name_file}}</p>
+
+<div ALIGN=center>
+    {% include 'file.html' %}
+</div>
+
 {% endblock %}
