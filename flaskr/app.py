@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import services.make_plot
+import services.dijkstra
 import os
 
 UPLOAD_FOLDER = os.path.abspath("./uploads/")
@@ -27,14 +28,31 @@ class Posts(db.Model):
     title = db.Column(db.String(50))
 '''
 
+def get_camino(lista):
+    '''
+    Regresa el shortest path
+    '''
+    regresar = ""
+    for i in lista:
+        regresar += str(i[0]) + "➡"
+    v = lista.pop()
+    regresar += str(v[1])
+    return regresar
+
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    ruta = "uploads/"
     name_file = "default.txt"
-    titulo = "Grafos!"
+    titulo = "Dijkstra's shortest path!"
+    u = 1
+    v = 3
     
     if request.method == "POST":
-
+        u = int(request.form['u'])
+        v = int(request.form['v'])
+        #print(u)
         if not "file" in request.files:
             error = "No file part in the form."
 
@@ -54,8 +72,16 @@ def index():
     else:
         error= "Seleccione un archivo .txt"
         
-    services.make_plot.run("uploads/"+ name_file)
-    return render_template("index.html", titulo = titulo, error = error, name_file = name_file)
+    lista = services.dijkstra.get_short_path(ruta+ name_file, u, v) # return[(a,b), (b,c), ..., cost] or None
+    if lista is not None and len(lista) > 1:
+        costo = lista.pop()
+        camino = get_camino(lista[:])
+    else:
+        lista = None
+        costo = "0, because there's no way 😢"
+        camino = ("Sorry, there's no way to reach {} from {}").format(v,u)
+    services.make_plot.run(ruta + name_file, lista)
+    return render_template("index.html", titulo = titulo, error = error, name_file = name_file, costo = costo, camino = camino)
 
 
 if __name__ == "__main__":
