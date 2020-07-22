@@ -48,11 +48,11 @@ def index():
     titulo = "Dijkstra's shortest path!"
     u = 1
     v = 3
-    
     if request.method == "POST":
-        u = int(request.form['u'])
-        v = int(request.form['v'])
         #print(u)
+        if request.form['u'] != "" and request.form['v'] != "":
+            u = int(request.form['u'])
+            v = int(request.form['v'])
         if not "file" in request.files:
             error = "No file part in the form."
 
@@ -61,6 +61,7 @@ def index():
             error = "No file selected. Please select a .txt"
             
         elif f and allowed_file(f.filename):
+
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             name_file = f.filename
@@ -78,10 +79,10 @@ def index():
         camino = get_camino(lista[:])
     else:
         lista = None
-        costo = "0, because there's no way 😢"
+        costo = "Undefined, because there's no way 😢"
         camino = ("Sorry, there's no way to reach {} from {}").format(v,u)
     services.make_plot.run(ruta + name_file, lista)
-    return render_template("index.html", titulo = titulo, error = error, name_file = name_file, costo = costo, camino = camino)
+    return render_template("index.html", titulo = titulo, error = error, name_file = name_file, costo = costo, camino = camino, u=u, v=v)
 
 
 if __name__ == "__main__":
