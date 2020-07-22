@@ -4,6 +4,65 @@ import networkx as nx
 
 import random
 
+def get_shot_edge_trace(G, recorrido, path_color):
+        camino_x = []
+        camino_y = []
+        for edge in G.edges():
+            #print("edge: ", edge)
+            for i in recorrido:
+                #print(edge == i)
+                if edge == i:
+                    recorrido.remove(i)
+                    x0, y0 = G.nodes[edge[0]]["pos"]
+                    x1, y1 = G.nodes[edge[1]]["pos"]
+                    camino_x.append(x0)
+                    camino_x.append(x1)
+                    camino_x.append(None)
+                    camino_y.append(y0)
+                    camino_y.append(y1)
+                    camino_y.append(None)
+                    break
+
+        short_edge = go.Scatter(
+            x=camino_x, y=camino_y,
+            line=dict(width=3, color=path_color),
+            hoverinfo='none',
+            mode='lines')
+        return short_edge
+
+def get_node_edge_trace(G, recorrido, path_color):
+    node_x = []
+    node_y = []
+    for node in G.nodes():
+        print("node: ", node)
+        for i in recorrido:
+            print("hola", i)
+            if node in i:
+                x, y = G.nodes[node]['pos']
+                node_x.append(x)
+                node_y.append(y)
+                break
+
+    node_trace = go.Scatter(
+        x=node_x, y=node_y,
+        mode='markers',
+        hoverinfo='text',
+        line_color='crimson',
+        marker=dict(
+            showscale=False,
+            # colorscale options
+            # 'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
+            # 'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
+            # 'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
+            color=path_color,
+            line=dict(
+                color=path_color,
+                width=6
+                )
+            )
+        )
+    return node_trace
+
 def leer_grafo(file_name):
     '''
     Recibe el nombre del archivo de txt a leer
@@ -47,7 +106,7 @@ G.add_edge(1,5)
 '''
 
 # Create Edges / vertices
-def get_plot(G):
+def get_plot(G, recorrido, path_color = "crimson"):
     edge_x = []
     edge_y = []
     for edge in G.edges():
@@ -64,27 +123,6 @@ def get_plot(G):
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=0.5, color='#888'),
-        hoverinfo='none',
-        mode='lines')
-
-    camino_x = []
-    camino_y = []
-    for edge in G.edges():
-        #print("edge: ", edge)
-        #print(edge == (0, 1))
-        if edge == (0, 1):
-            x0, y0 = G.nodes[edge[0]]['pos']
-            x1, y1 = G.nodes[edge[1]]["pos"]
-            edge_x.append(x0)
-            edge_x.append(x1)
-            edge_x.append(None)
-            edge_y.append(y0)
-            edge_y.append(y1)
-            edge_y.append(None)
-
-    short_edge = go.Scatter(
-        x=camino_x, y=camino_y,
-        line=dict(width=2, color='#888'),
         hoverinfo='none',
         mode='lines')
 
@@ -161,14 +199,23 @@ def get_plot(G):
     #    width=800,
     #    height=400
     #)
+    if recorrido != None:
+        short_edge = get_shot_edge_trace(G, recorrido[:], path_color)
+        node_path = get_node_edge_trace(G, recorrido, path_color)
+        print(type(node_path))
+        fig.add_trace(short_edge)
+        fig.add_trace(node_path)
+
+
     config = {'toImageButtonOptions': # for responsive
           {'width': 1000,
            'height': 400,
            'format': 'svg',
            'filename': 'bar_chart'}}
 
-    fig.write_html("templates/file.html", include_plotlyjs='cdn', full_html = True, config=config)
+    fig.write_html("templates/file.html", include_plotlyjs='cdn', full_html = False, config=config)
 
-def run(nombre_archivo):
+def run(nombre_archivo, camino):
+    #path_color = 'blue' # Choose path color, crimson color is default color
     G = leer_grafo(nombre_archivo)
-    get_plot(G)
+    get_plot(G, camino)
