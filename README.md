@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/github/license/TanZng/dijkstras-shortest-path?color=BLUE&style=for-the-badge)](https://github.com/TanZng/dijkstras-shortest-path/blob/master/LICENSE.md)
 [![love](https://img.shields.io/badge/Made%20with-%E2%9D%A4-9cf?style=for-the-badge&logo)](tanx.dev)
 [![flask](https://img.shields.io/badge/AND%20-FLASK-red?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/1.1.x/)
-[![Progress](https://progress-bar.dev/38/)](https://github.com/TanZng/dijkstras-shortest-path/blob/master/README.md#to-do)
+[![Progress](https://progress-bar.dev/54/)](https://github.com/TanZng/dijkstras-shortest-path/blob/master/README.md#to-do)
 
 Simple (really simple) web application that plots the shortest path obtained from the Dijkstra's algorithm.
 
@@ -12,14 +12,15 @@ Simple (really simple) web application that plots the shortest path obtained fro
 
 # Table of Contents
 
+- [Dijkstra's shortest path algorithm](#dijkstras-shortest-path-algorithm)
 - [Table of Contents](#table-of-contents)
-	- [Install🚀](#install)
-	- [About🤔](#about)
-	- [To mess around you need 🛠](#to-mess-around-you-need)
-	- [To do📝](#to-do)
-   - [Contributing🤝🏼](#contributing)
-   - [The Team🙌🏼](#the-team)
-   - [License📄](#license)
+  - [Install🚀](#install)
+  - [About🤔](#about)
+  - [To mess around you need🛠](#to-mess-around-you-need)
+  - [To do📝](#to-do)
+  - [Contributing🤝🏼](#contributing)
+  - [The Team🙌🏼](#the-team)
+  - [License📄](#license)
 
 ## Install🚀
 
@@ -35,7 +36,7 @@ Simple (really simple) web application that plots the shortest path obtained fro
    virtualenv flask_env
    ```
   
-3. Activate virtualenv/Windows
+3. Activate virtualenv
    ``` Shell
    # Windows
    cd flask_env/Scripts
@@ -116,8 +117,8 @@ pip install virtualenv
 - [x] Set a default example.
 - [x] Form to choose u (star) and v (end).
 - [x] Create a simple README.md
-- [ ] Render shortest path - edge trace - with a diferent color.
-- [ ] Upload Dijkstra's shortest path algorithm.
+- [x] Render shortest path - edge trace - with a diferent color.
+- [x] Upload Dijkstra's shortest path algorithm.
 - [ ] Upload the web app.
 - [ ] Add "How to use" on the README.
 - [ ] Add simple CONTRIBUTING.md
