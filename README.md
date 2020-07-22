@@ -7,7 +7,7 @@
 
 Simple (really simple) web application that plots the shortest path obtained from the Dijkstra's algorithm.
 
-<img src="https://github.com/TanZng/dijkstras-shortest-path/blob/master/flaskr/static/img/node.png " alt="node_icon" width="200"/>
+<img src="https://github.com/TanZng/dijkstras-shortest-path/blob/master/flaskr/static/img/node.png " alt="node_icon" width="200"/> <img src="https://github.com/TanZng/dijkstras-shortest-path/blob/master/flaskr/static/img/web_alpha.png " alt="web_alpha" width="200"/>
 
 
 # Table of Contents
